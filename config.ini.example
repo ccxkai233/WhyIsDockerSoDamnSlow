@@ -1,0 +1,22 @@
+[Registry]
+# 您的私有 Docker Registry 地址 (用于 push 和 pull 私有镜像)
+private_registry = dcr.your-domain.com
+
+# 您的缓存 Docker Registry 地址 (用于 pull 公共镜像)
+cache_registry = mir.your-domain.com
+# 您的私有 Registry 用户名 (用于远程构建时登录)
+registry_user = your_username
+# 您的私有 Registry 密码 (用于远程构建时登录)
+registry_pass = your_password
+
+[SSH]
+# 您的 VPS IP 地址
+host = your_vps_ip
+# SSH 端口
+port = 22
+# SSH 用户名
+user = root
+# SSH 私钥文件的绝对路径 (例如 C:/Users/YourUser/.ssh/id_rsa)
+key_path = /path/to/your/ssh/private/key
+# SSH 私钥的密码 (如果没有密码则留空)
+key_pass =

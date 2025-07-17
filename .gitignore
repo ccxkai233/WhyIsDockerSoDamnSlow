@@ -1,0 +1,34 @@
+# Private configuration files
+# 忽略私有配置文件
+config.ini
+
+# Python artifacts
+# 忽略 Python 编译和缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+# 忽略虚拟环境目录
+venv/
+.venv/
+env/
+.env/
+venv
+env
+
+# IDE / Editor specific files
+# 忽略 IDE 和编辑器相关的配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
+# Local state files
+# 忽略本地状态文件
+build_state.ini
