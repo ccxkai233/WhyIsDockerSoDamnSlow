@@ -139,3 +139,26 @@ chmod +x /home/user/scripts/cleanup_registry_cache.sh
     ```bash
     docker compose exec registry bin/registry garbage-collect /etc/docker/registry/config.yml
     ```
+## 7. 安全与防火墙
+
+### 7.1. 防火墙转发策略
+
+**重要注意点**: 请务必检查您的 VPS 防火墙（例如 `iptables` 或 `firewalld`）的默认配置。
+
+某些系统默认的防火墙策略是 **`FORWARD` 链为 `DROP`**，即默认丢弃所有转发流量。由于 Docker 容器间的通信以及容器与外部网络的通信依赖于内核的 IP 转发功能，此配置会导致 Caddy 无法将流量转发到后端的 Registry 容器。
+
+**如何检查 (以 `iptables` 为例):**
+```bash
+sudo iptables -L FORWARD -v -n
+```
+如果看到 `(policy DROP)`，则需要添加规则以允许 Docker 相关的转发流量。通常，安装 Docker 时会自动添加必要的规则，但如果您的防火墙配置非常严格或在 Docker 安装后进行了重置，则可能需要手动干预。
+
+一个基本的允许规则示例：
+```bash
+# 允许从 proxy_net (docker-compose.yml 中定义的网络) 出来的流量
+sudo iptables -A FORWARD -i proxy_net -j ACCEPT
+
+# 允许进入 proxy_net 的流量
+sudo iptables -A FORWARD -o proxy_net -j ACCEPT
+```
+*请根据您 `docker-compose.yml` 中定义的实际网络名称调整 `-i` 和 `-o` 的参数。*
